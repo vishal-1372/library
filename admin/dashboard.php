@@ -25,120 +25,229 @@ else{?>
     <!-- CUSTOM STYLE  -->
     <link href="assets/css/style.css" rel="stylesheet" />
     <!-- GOOGLE FONT -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css' />
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .content-wrapper {
+            padding: 30px 0;
+        }
+        .dashboard-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 30px;
+            border-left: 4px solid #2196F3;
+            padding-left: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .stat-card {
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+            overflow: hidden;
+            position: relative;
+            border: none;
+            height: 100%;
+        }
+        .stat-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+        }
+        .stat-card-inner {
+            padding: 25px 15px;
+            text-align: center;
+            color: white;
+        }
+        .books-card {
+            background: linear-gradient(135deg, #42b3d5 0%, #2196F3 100%);
+        }
+        .pending-card {
+            background: linear-gradient(135deg, #ff9800 0%, #ff7043 100%);
+        }
+        .users-card {
+            background: linear-gradient(135deg, #f44336 0%, #e91e63 100%);
+        }
+        .authors-card {
+            background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
+        }
+        .categories-card {
+            background: linear-gradient(135deg, #9c27b0 0%, #673ab7 100%);
+        }
+        .stat-icon {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .stat-icon i {
+            font-size: 48px;
+            opacity: 0.8;
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        .stat-label {
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .card-link {
+            display: block;
+            color: white;
+            text-decoration: none;
+        }
+        .card-link:hover, .card-link:focus {
+            color: white;
+            text-decoration: none;
+        }
+        .dashboard-row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .dashboard-col {
+            padding: 10px;
+            height: 100%;
+        }
+        .stat-card::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            transition: all 0.5s ease;
+        }
+        .stat-card:hover::after {
+            transform: scale(4);
+        }
+    </style>
 </head>
 <body>
       <!------MENU SECTION START-->
 <?php include('includes/header.php');?>
 <!-- MENU SECTION END-->
     <div class="content-wrapper">
-         <div class="container">
-        <div class="row pad-botm">
-            <div class="col-md-12">
-                <h4 class="header-line">ADMIN DASHBOARD</h4>
-                
+        <div class="container">
+            <div class="row pad-botm">
+                <div class="col-md-12">
+                    <h2 class="dashboard-title">Admin Dashboard</h2>
+                </div>
+            </div>
+             
+            <div class="row dashboard-row">
+                <div class="col-md-4 col-sm-6 col-xs-12 dashboard-col">
+                    <a href="manage-books.php" class="card-link">
+                        <div class="stat-card">
+                            <div class="stat-card-inner books-card">
+                                <div class="stat-icon">
+                                    <i class="fa fa-book"></i>
+                                </div>
+                                <?php 
+                                $sql ="SELECT id from tblbooks ";
+                                $query = $dbh -> prepare($sql);
+                                $query->execute();
+                                $results=$query->fetchAll(PDO::FETCH_OBJ);
+                                $listdbooks=$query->rowCount();
+                                ?>
+                                <div class="stat-number"><?php echo htmlentities($listdbooks);?></div>
+                                <div class="stat-label">Books Listed</div>
                             </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="col-md-4 col-sm-6 col-xs-12 dashboard-col">
+                    <a href="manage-issued-books.php" class="card-link">
+                        <div class="stat-card">
+                            <div class="stat-card-inner pending-card">
+                                <div class="stat-icon">
+                                    <i class="fa fa-refresh"></i>
+                                </div>
+                                <?php 
+                                $sql2 ="SELECT id from tblissuedbookdetails where (RetrunStatus='' || RetrunStatus is null)";
+                                $query2 = $dbh -> prepare($sql2);
+                                $query2->execute();
+                                $results2=$query2->fetchAll(PDO::FETCH_OBJ);
+                                $returnedbooks=$query2->rowCount();
+                                ?>
+                                <div class="stat-number"><?php echo htmlentities($returnedbooks);?></div>
+                                <div class="stat-label">Books Not Returned</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
+                <div class="col-md-4 col-sm-6 col-xs-12 dashboard-col">
+                    <a href="reg-students.php" class="card-link">
+                        <div class="stat-card">
+                            <div class="stat-card-inner users-card">
+                                <div class="stat-icon">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <?php 
+                                $sql3 ="SELECT id from tblstudents ";
+                                $query3 = $dbh -> prepare($sql3);
+                                $query3->execute();
+                                $results3=$query3->fetchAll(PDO::FETCH_OBJ);
+                                $regstds=$query3->rowCount();
+                                ?>
+                                <div class="stat-number"><?php echo htmlentities($regstds);?></div>
+                                <div class="stat-label">Registered Users</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12 dashboard-col">
+                    <a href="manage-authors.php" class="card-link">
+                        <div class="stat-card">
+                            <div class="stat-card-inner authors-card">
+                                <div class="stat-icon">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <?php 
+                                $sq4 ="SELECT id from tblauthors ";
+                                $query4 = $dbh -> prepare($sq4);
+                                $query4->execute();
+                                $results4=$query4->fetchAll(PDO::FETCH_OBJ);
+                                $listdathrs=$query4->rowCount();
+                                ?>
+                                <div class="stat-number"><?php echo htmlentities($listdathrs);?></div>
+                                <div class="stat-label">Authors Listed</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12 dashboard-col">
+                    <a href="manage-categories.php" class="card-link">
+                        <div class="stat-card">
+                            <div class="stat-card-inner categories-card">
+                                <div class="stat-icon">
+                                    <i class="fa fa-list"></i>
+                                </div>
+                                <?php 
+                                $sql5 ="SELECT id from tblcategory ";
+                                $query5 = $dbh -> prepare($sql5);
+                                $query5->execute();
+                                $results5=$query5->fetchAll(PDO::FETCH_OBJ);
+                                $listdcats=$query5->rowCount();
+                                ?>
+                                <div class="stat-number"><?php echo htmlentities($listdcats);?></div>
+                                <div class="stat-label">Listed Categories</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>             
         </div>
-             
-             <div class="row">
-<a href="manage-books.php">
- <div class="col-md-3 col-sm-3 col-xs-6">
- <div class="alert alert-success back-widget-set text-center">
- <i class="fa fa-book fa-5x"></i>
-<?php 
-$sql ="SELECT id from tblbooks ";
-$query = $dbh -> prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$listdbooks=$query->rowCount();
-?>
-<h3><?php echo htmlentities($listdbooks);?></h3>
-Books Listed
-</div></div></a>
-
-            
-       
-             <a href="manage-issued-books.php">
-               <div class="col-md-3 col-sm-3 col-xs-6">
-                      <div class="alert alert-warning back-widget-set text-center">
-                            <i class="fa fa-recycle fa-5x"></i>
-<?php 
-$sql2 ="SELECT id from tblissuedbookdetails where (RetrunStatus='' || RetrunStatus is null)";
-$query2 = $dbh -> prepare($sql2);
-$query2->execute();
-$results2=$query2->fetchAll(PDO::FETCH_OBJ);
-$returnedbooks=$query2->rowCount();
-?>
-
-                            <h3><?php echo htmlentities($returnedbooks);?></h3>
-                          Books Not Returned Yet
-                        </div>
-                    </div>
-                </a>
-
-  <a href="reg-students.php">
-               <div class="col-md-3 col-sm-3 col-xs-6">
-                      <div class="alert alert-danger back-widget-set text-center">
-                            <i class="fa fa-users fa-5x"></i>
-                            <?php 
-$sql3 ="SELECT id from tblstudents ";
-$query3 = $dbh -> prepare($sql3);
-$query3->execute();
-$results3=$query3->fetchAll(PDO::FETCH_OBJ);
-$regstds=$query3->rowCount();
-?>
-                            <h3><?php echo htmlentities($regstds);?></h3>
-                           Registered Users
-                        </div>
-                    </div></a>
-
-
-  <a href="manage-authors.php">
- <div class="col-md-3 col-sm-3 col-xs-6">
-                      <div class="alert alert-success back-widget-set text-center">
-                            <i class="fa fa-user fa-5x"></i>
-<?php 
-$sq4 ="SELECT id from tblauthors ";
-$query4 = $dbh -> prepare($sq4);
-$query4->execute();
-$results4=$query4->fetchAll(PDO::FETCH_OBJ);
-$listdathrs=$query4->rowCount();
-?>
-<h3><?php echo htmlentities($listdathrs);?></h3>
-Authors Listed
-</div>
-</div></a>
-</div>
-
-
-
- <div class="row">
-
-
-
-  <a href="manage-categories.php">            
-<div class="col-md-3 col-sm-3 rscol-xs-6">
-<div class="alert alert-info back-widget-set text-center">
-<i class="fa fa-file-archive-o fa-5x"></i>
-<?php 
-$sql5 ="SELECT id from tblcategory ";
-$query5 = $dbh -> prepare($sql5);
-$query5->execute();
-$results5=$query5->fetchAll(PDO::FETCH_OBJ);
-$listdcats=$query5->rowCount();
-?>
-
-                            <h3><?php echo htmlentities($listdcats);?> </h3>
-                           Listed Categories
-                        </div>
-                    </div></a>
-             
-
-        </div>             
-            
-    </div>
     </div>
      <!-- CONTENT-WRAPPER SECTION END-->
 <?php include('includes/footer.php');?>

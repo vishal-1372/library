@@ -101,48 +101,80 @@ error:function (){}
                             </div>
 
         </div>
-             <div class="row">
+        <div class="row">
            
-<div class="col-md-9 col-md-offset-1">
-               <div class="panel panel-danger">
-                        <div class="panel-heading">
-                           SINGUP FORM
-                        </div>
-                        <div class="panel-body">
-                            <form name="signup" method="post" onSubmit="return valid();">
-<div class="form-group">
-<label>Enter Full Name</label>
-<input class="form-control" type="text" name="fullanme" autocomplete="off" required />
-</div>
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-user-plus"></i> USER REGISTRATION</h4>
+                    </div>
+                    <div class="panel-body">
+                        <form name="signup" method="post" onSubmit="return valid();" class="form-horizontal">
+                            
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Full Name:</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        <input class="form-control" type="text" name="fullanme" placeholder="Enter your full name" autocomplete="off" required />
+                                    </div>
+                                </div>
+                            </div>
 
-
-<div class="form-group">
-<label>Mobile Number :</label>
-<input class="form-control" type="text" name="mobileno" maxlength="10" autocomplete="off" required />
-</div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Mobile Number:</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                        <input class="form-control" type="text" name="mobileno" maxlength="10" placeholder="Enter your mobile number" autocomplete="off" required />
+                                    </div>
+                                </div>
+                            </div>
                                         
-<div class="form-group">
-<label>Enter Email</label>
-<input class="form-control" type="email" name="email" id="emailid" onBlur="checkAvailability()"  autocomplete="off" required  />
-   <span id="user-availability-status" style="font-size:12px;"></span> 
-</div>
-
-<div class="form-group">
-<label>Enter Password</label>
-<input class="form-control" type="password" name="password" autocomplete="off" required  />
-</div>
-
-<div class="form-group">
-<label>Confirm Password </label>
-<input class="form-control"  type="password" name="confirmpassword" autocomplete="off" required  />
-</div>
-                             
-<button type="submit" name="signup" class="btn btn-danger" id="submit">Register Now </button>
-
-                                    </form>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Email Address:</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        <input class="form-control" type="email" name="email" id="emailid" onBlur="checkAvailability()" placeholder="Enter your email address" autocomplete="off" required />
+                                    </div>
+                                    <span id="user-availability-status" style="font-size:12px;"></span>
+                                </div>
                             </div>
-                        </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Password:</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                        <input class="form-control" type="password" name="password" placeholder="Create a strong password" autocomplete="off" required />
+                                    </div>
+                                </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Confirm Password:</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                        <input class="form-control" type="password" name="confirmpassword" placeholder="Repeat your password" autocomplete="off" required />
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="submit" name="signup" class="btn btn-danger btn-lg" id="submit">
+                                        <i class="fa fa-user-plus"></i> Register Now
+                                    </button>
+                                    <p class="help-block mt-3">Already have an account? <a href="index.php">Login here</a></p>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     </div>
